@@ -1,7 +1,7 @@
 # Личный проект «Киноман» [![Build status][travis-image]][travis-url]
 
 * Студент: [Никита Стороженко](https://up.htmlacademy.ru/ecmascript/12/user/1167041).
-* Наставник: `Неизвестно`.
+* Наставник: [Михаил Еланцев](https://htmlacademy.ru/profile/id928641).
 
 ---
 
