@@ -1,4 +1,4 @@
-`use strict`;
+'use strict';
 
 const MAIN_FILMS = 5;
 const EXTRA_FILMS = 2;
@@ -57,7 +57,7 @@ const createContentTemplate = () => {
   );
 };
 
-const film = () => {
+const createFilmTemplate = () => {
   return (
     `<article class="film-card">
           <h3 class="film-card__title">The Man with the Golden Arm</h3>
@@ -85,7 +85,7 @@ const showMoreBtn = () => {
   );
 };
 
-const filmPopup = () => {
+const createFilmPopupTemplate = () => {
   return (
     `<section class="film-details">
       <form class="film-details__inner" action="" method="get">
@@ -266,12 +266,11 @@ const render = (container, template, place = `beforeend`) => {
 const siteBody = document.querySelector(`body`);
 const siteHeaderElement = siteBody.querySelector(`.header`);
 const siteMainElement = siteBody.querySelector(`.main`);
-const siteFooterElement = siteBody.querySelector(`.footer`);
 
-render (siteHeaderElement, createUserProfileTemplate());
-render (siteMainElement, createMainNavigationTemplate());
-render (siteMainElement, createFilmsSortingTemplate());
-render (siteMainElement, createContentTemplate());
+render(siteHeaderElement, createUserProfileTemplate());
+render(siteMainElement, createMainNavigationTemplate());
+render(siteMainElement, createFilmsSortingTemplate());
+render(siteMainElement, createContentTemplate());
 
 const content = siteMainElement.querySelector(`.films`);
 const sortedFilms = content.querySelector(`.films-list`);
@@ -279,14 +278,14 @@ const sortedFilmsContainer = sortedFilms.querySelector(`.films-list__container`)
 const extraFilmsCategories = content.querySelectorAll(`.films-list--extra`);
 
 for (let i = 0; i < MAIN_FILMS; i++) {
-  render (sortedFilmsContainer, film());
-};
+  render(sortedFilmsContainer, createFilmTemplate());
+}
 
-render (sortedFilms, showMoreBtn());
+render(sortedFilms, showMoreBtn());
 
 for (let j = 0; j < extraFilmsCategories.length; j++) {
   for (let i = 0; i < EXTRA_FILMS; i++) {
     const extraFilmsList = extraFilmsCategories[j].querySelector(`.films-list__container`);
-    render (extraFilmsList, film());
-  };
-};
+    render(extraFilmsList, createFilmTemplate());
+  }
+}
