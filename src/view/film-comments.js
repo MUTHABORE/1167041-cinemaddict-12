@@ -3,7 +3,7 @@ export const createCommentTemplate = (currentComment) => {
   return (
     `<li class="film-details__comment">
       <span class="film-details__comment-emoji">
-        <img src="${emoji}" width="55" height="55" alt="emoji-smile">
+        <img src="${`./images/emoji/` + emoji}" width="55" height="55" alt="emoji-smile">
       </span>
       <div>
         <p class="film-details__comment-text">${text}</p>

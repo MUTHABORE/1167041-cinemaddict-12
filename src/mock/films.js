@@ -34,7 +34,7 @@ const generateFilmsDatabase = () => {
   for (let i = 0; i < MAX_FILMS_AMOUNT; i++) {
     films[i] = {};
 
-    films[i].poster = `./images/posters/` + POSTER_NAMES[getRandomInteger(0, POSTER_NAMES.length - 1)];
+    films[i].poster = POSTER_NAMES[getRandomInteger(0, POSTER_NAMES.length - 1)];
     films[i].name = FILM_NAMES[getRandomInteger(0, FILM_NAMES.length - 1)];
     films[i].originalName = films[i].name;
     films[i].rating = getRandomNumber();

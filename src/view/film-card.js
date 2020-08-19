@@ -13,7 +13,7 @@ export const createFilmTemplate = (filmData) => {
         <span class="film-card__duration">${Math.floor(runtime / 60) + `h ` + Math.floor(runtime % 60) + `m`}</span>
         <span class="film-card__genre">${genres[0]}</span>
       </p>
-      <img src="${poster}" alt="Постер фильма ${name}" class="film-card__poster">
+      <img src="${`./images/posters/` + poster}" alt="Постер фильма ${name}" class="film-card__poster">
       <p class="film-card__description">${shortDescription}</p>
       <a class="film-card__comments">${comments.length} comments</a>
       <form class="film-card__controls">

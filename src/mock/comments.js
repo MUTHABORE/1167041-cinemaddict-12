@@ -19,7 +19,7 @@ export const generateComments = () => {
   for (let i = 0; i < commentsAmount; i++) {
     сomments[i] = {};
     сomments[i].text = COMMENT_TEXT[getRandomInteger(0, COMMENT_TEXT.length - 1)];
-    сomments[i].emoji = `./images/emoji/` + EMOJIS[getRandomInteger(0, EMOJIS.length - 1)];
+    сomments[i].emoji = EMOJIS[getRandomInteger(0, EMOJIS.length - 1)];
     сomments[i].author = COMMENT_AUTHORS[getRandomInteger(0, COMMENT_AUTHORS.length - 1)];
     сomments[i].date = new Date(getRandomInteger(MIN_COMMENT_YEAR, MAX_COMMENT_YEAR), getRandomInteger(0, MONTHS.length), getRandomInteger(0, MONTH_DAYS_MAX), getRandomInteger(0, COMMENTS_MAX_HOURS), getRandomInteger(0, COMMENTS_MAX_MINUTS));
   }
