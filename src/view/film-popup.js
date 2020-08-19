@@ -1,5 +1,7 @@
+import {MONTHS} from '../mock/films.js';
+
 export const createFilmPopupTemplate = (filmData) => {
-  const {name, rating, poster, ageRating, director, writers, actors, releaseDate, releaseYear, runtime, country, description, comments} = filmData;
+  const {name, rating, poster, ageRating, director, writers, actors, releaseDate, runtime, countries, description, comments} = filmData;
   return (
     `<section class="film-details">
       <form class="film-details__inner" action="" method="get">
@@ -33,23 +35,23 @@ export const createFilmPopupTemplate = (filmData) => {
                 </tr>
                 <tr class="film-details__row">
                   <td class="film-details__term">Writers</td>
-                  <td class="film-details__cell">${writers}</td>
+                  <td class="film-details__cell">${writers.join(`, `)}</td>
                 </tr>
                 <tr class="film-details__row">
                   <td class="film-details__term">Actors</td>
-                  <td class="film-details__cell">${actors}</td>
+                  <td class="film-details__cell">${actors.join(`, `)}</td>
                 </tr>
                 <tr class="film-details__row">
                   <td class="film-details__term">Release Date</td>
-                  <td class="film-details__cell">${releaseDate} ${releaseYear}</td>
+                  <td class="film-details__cell">${releaseDate.getDate() + ` ` + MONTHS[releaseDate.getMonth()] + ` ` + releaseDate.getFullYear()}</td>
                 </tr>
                 <tr class="film-details__row">
                   <td class="film-details__term">Runtime</td>
-                  <td class="film-details__cell">${runtime}</td>
+                  <td class="film-details__cell">${Math.floor(runtime / 60) + `h ` + Math.floor(runtime % 60) + `m`}</td>
                 </tr>
                 <tr class="film-details__row">
                   <td class="film-details__term">Country</td>
-                  <td class="film-details__cell">${country}</td>
+                  <td class="film-details__cell">${countries.join(`, `)}</td>
                 </tr>
                 <tr class="film-details__row">
                   <td class="film-details__term">Genres</td>

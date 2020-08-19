@@ -22,3 +22,8 @@ export const getRandomSet = (arr, min = 0) => {
 export const getRandomNumber = (digits = 1) => {
   return (Math.random() * 10).toFixed(digits);
 };
+
+export const getRandomBoolean = () => {
+  const boolean = Math.random() >= 0.5;
+  return boolean;
+};

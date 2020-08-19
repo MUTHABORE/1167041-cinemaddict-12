@@ -56,7 +56,7 @@ const onClosePopup = () => {
 
 const renderGenres = (currentIndex) => {
   const genresContainer = document.querySelector(`.film-details__cell--genres`);
-  similarFilms[currentIndex].genre.forEach((elem) => {
+  similarFilms[currentIndex].genres.forEach((elem) => {
     render(genresContainer, createGenresTemplate(elem));
   });
 };
@@ -89,9 +89,8 @@ const renderFilmCards = () => {
   const countShowFilms = amountFilmsToRender;
   amountFilmsToRender += AMOUNT_FILMS_TO_SHOW;
 
-  const filteredFilmsToShow = similarFilms.slice(countShowFilms, amountFilmsToRender);
-  for (const currentFilm of filteredFilmsToShow) {
-    render(sortedFilmsContainer, createFilmTemplate(currentFilm));
+  for (let i = countShowFilms; i < amountFilmsToRender; i++) {
+    render(sortedFilmsContainer, createFilmTemplate(similarFilms[i]));
   }
 
   const filmPosters = document.querySelectorAll(`.film-card__poster`);

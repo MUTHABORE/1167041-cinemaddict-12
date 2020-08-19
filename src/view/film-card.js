@@ -1,17 +1,17 @@
-export const createFilmTemplate = (filmData) => {
-  const {name, rating, releaseYear, runtime, genre, poster, comments, description} = filmData;
+const SHORT_DESCRIPTION_LENGTH = 139;
 
-  const SHORT_DESCRIPTION_LENGTH = 139;
-  const shortDescription = description.join(`. `).length > 140 ? description.join(`. `).slice(0, SHORT_DESCRIPTION_LENGTH) + `…` : description.join(`. `);
+export const createFilmTemplate = (filmData) => {
+  const {name, rating, releaseDate, runtime, genres, poster, comments, description} = filmData;
+  const shortDescription = description.length > 140 ? description.slice(0, SHORT_DESCRIPTION_LENGTH) + `…` : description;
 
   return (
     `<article class="film-card">
       <h3 class="film-card__title">${name}</h3>
       <p class="film-card__rating">${rating}</p>
       <p class="film-card__info">
-        <span class="film-card__year">${releaseYear}</span>
-        <span class="film-card__duration">${runtime}</span>
-        <span class="film-card__genre">${genre[0]}</span>
+        <span class="film-card__year">${releaseDate.getFullYear()}</span>
+        <span class="film-card__duration">${Math.floor(runtime / 60) + `h ` + Math.floor(runtime % 60) + `m`}</span>
+        <span class="film-card__genre">${genres[0]}</span>
       </p>
       <img src="${poster}" alt="Постер фильма ${name}" class="film-card__poster">
       <p class="film-card__description">${shortDescription}</p>
