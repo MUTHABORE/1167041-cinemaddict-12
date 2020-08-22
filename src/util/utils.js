@@ -1,5 +1,17 @@
-export const render = (container, template, place = `beforeend`) => {
-  container.insertAdjacentHTML(place, template);
+export const createElement = (template) => {
+  const newElement = document.createElement(`div`);
+  newElement.innerHTML = template;
+  return newElement.firstChild;
+};
+
+export const render = (container, element, place = `beforeend`) => {
+  switch (place) {
+    case `afterend`:
+      container.after(element.getElement());
+      break;
+    case `beforeend`:
+      container.append(element.getElement());
+  }
 };
 
 export const getRandomInteger = (a = 0, b = 1) => {
@@ -24,6 +36,6 @@ export const getRandomNumber = (digits = 1) => {
 };
 
 export const getRandomBoolean = () => {
-  const boolean = Math.random() >= 0.5;
-  return boolean;
+  const randomBoolean = Math.random() >= 0.5;
+  return randomBoolean;
 };

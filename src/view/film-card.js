@@ -1,6 +1,8 @@
+import {createElement} from '../util/utils.js';
+
 const SHORT_DESCRIPTION_LENGTH = 139;
 
-export const createFilmTemplate = (filmData) => {
+const createFilmTemplate = (filmData) => {
   const {name, rating, releaseDate, runtime, genres, poster, comments, description} = filmData;
   const shortDescription = description.length > 140 ? description.slice(0, SHORT_DESCRIPTION_LENGTH) + `…` : description;
 
@@ -24,3 +26,26 @@ export const createFilmTemplate = (filmData) => {
     </article>`
   );
 };
+
+export default class FilmCard {
+  constructor(filmData) {
+    this._element = null;
+    this._filmData = filmData;
+  }
+
+  getTemplate() {
+    return createFilmTemplate(this._filmData);
+  }
+
+  getElement() {
+    if (!this._element) {
+      this._element = createElement(this.getTemplate());
+    }
+
+    return this._element;
+  }
+
+  removeElement() {
+    this._element = null;
+  }
+}

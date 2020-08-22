@@ -1,7 +1,19 @@
 import {MONTHS} from '../mock/films.js';
+import {createElement} from '../util/utils.js';
 
-export const createFilmPopupTemplate = (filmData) => {
-  const {name, rating, poster, ageRating, director, writers, actors, releaseDate, runtime, countries, description, comments} = filmData;
+const createFilmPopupTemplate = (filmData) => {
+  const {name, rating, poster, ageRating, director, writers, actors, releaseDate, runtime, countries, description, comments, genres} = filmData;
+
+  const createGenres = () => {
+    let filmsGenres = ``;
+    for (let i = 0; i < genres.length; i++) {
+      filmsGenres += `<span class="film-details__genre">${genres[i]}</span>`;
+    }
+    return filmsGenres;
+  };
+
+  const genreTitle = genres.length === 1 ? `Genre` : `Genres`;
+
   return (
     `<section class="film-details">
       <form class="film-details__inner" action="" method="get">
@@ -54,8 +66,8 @@ export const createFilmPopupTemplate = (filmData) => {
                   <td class="film-details__cell">${countries.join(`, `)}</td>
                 </tr>
                 <tr class="film-details__row">
-                  <td class="film-details__term">Genres</td>
-                  <td class="film-details__cell--genres"></td>
+                  <td class="film-details__term">${genreTitle}</td>
+                  <td class="film-details__cell--genres">${createGenres()}</td>
                 </tr>
               </tbody></table>
 
@@ -118,3 +130,26 @@ export const createFilmPopupTemplate = (filmData) => {
     </section>`
   );
 };
+
+export default class FilmDetails {
+  constructor(filmData) {
+    this._element = null;
+    this._filmData = filmData;
+  }
+
+  getTemplate() {
+    return createFilmPopupTemplate(this._filmData);
+  }
+
+  getElement() {
+    if (!this._element) {
+      this._element = createElement(this.getTemplate());
+    }
+
+    return this._element;
+  }
+
+  removeElement() {
+    this._element = null;
+  }
+}
