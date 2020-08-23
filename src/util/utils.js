@@ -36,6 +36,5 @@ export const getRandomNumber = (digits = 1) => {
 };
 
 export const getRandomBoolean = () => {
-  const randomBoolean = Math.random() >= 0.5;
-  return randomBoolean;
+  return Math.random() >= 0.5;
 };
