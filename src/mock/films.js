@@ -39,7 +39,7 @@ const generateFilmsDatabase = () => {
     films[i].originalName = films[i].name;
     films[i].rating = getRandomNumber();
     films[i].description = getRandomSet(DESCRIPTION, 3).join(`. `);
-    films[i].releaseDate = new Date(getRandomInteger(MIN_RELEASE_YEAR, MAX_RELEASE_YEAR), [getRandomInteger(0, MONTHS.length - 1)], getRandomInteger(1, MONTH_DAYS_MAX));
+    films[i].releaseDate = new Date(getRandomInteger(MIN_RELEASE_YEAR, MAX_RELEASE_YEAR), getRandomInteger(0, MONTHS.length - 1), getRandomInteger(1, MONTH_DAYS_MAX));
     films[i].director = FILM_PRODUCERS[getRandomInteger(0, FILM_PRODUCERS.length - 1)];
     films[i].writers = getRandomSet(FILM_WRITERS, 1);
     films[i].actors = getRandomSet(FILM_ACTORS, 1);

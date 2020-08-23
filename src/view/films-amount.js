@@ -1,18 +1,19 @@
 import {createElement} from '../util/utils.js';
 
-const showMoreBtn = () => {
+const createFilmsAmount = (allFilmsAmount) => {
   return (
-    `<button class="films-list__show-more">Show more</button>`
+    `<p>${allFilmsAmount} movies inside</p>`
   );
 };
 
-export default class ShowMoreButton {
-  constructor() {
+export default class FilmsAmount {
+  constructor(allFilmsAmount) {
     this._element = null;
+    this._allFilmsAmount = allFilmsAmount;
   }
 
   getTemplate() {
-    return showMoreBtn();
+    return createFilmsAmount(this._allFilmsAmount);
   }
 
   getElement() {

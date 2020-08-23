@@ -1,16 +1,15 @@
-import {createUserProfileTemplate} from './view/user-profile.js';
-import {createMainNavigationTemplate} from './view/main-navigation.js';
-import {createFilmsSortingTemplate} from './view/films-sorting.js';
-import {createContentTemplate} from './view/content.js';
-import {createFilmTemplate} from './view/film-card.js';
-import {createFilmPopupTemplate} from './view/film-popup.js';
-import {createFilmsAmount} from './view/footer-statistics.js';
-import {showMoreBtn} from './view/show-more-button.js';
-import {createGenresTemplate} from './view/film-genre.js';
-import {createCommentTemplate} from './view/film-comments.js';
+import UserProfileView from './view/user-profile.js';
+import MainNavigationView from './view/main-navigation.js';
+import FilmsSortingView from './view/films-sorting.js';
+import ContentView from './view/content.js';
+import FilmCardView from './view/film-card.js';
+import FilmDetailsView from './view/film-details.js';
+import FilmsAmountView from './view/films-amount.js';
+import ShowMoreButtonView from './view/show-more-button.js';
+import FilmCommentsView from './view/film-comments.js';
 
 import {render} from './util/utils.js';
-import {similarFilms} from './mock/films.js';
+import {similarFilms, filterResult} from './mock/films.js';
 
 const EXTRA_FILMS = 2;
 
@@ -20,10 +19,10 @@ const siteMainElement = siteBody.querySelector(`.main`);
 const siteFooterElement = siteBody.querySelector(`.footer`);
 const footerStatisticsContainer = siteFooterElement.querySelector(`.footer__statistics`);
 
-render(siteHeaderElement, createUserProfileTemplate());
-render(siteMainElement, createMainNavigationTemplate());
-render(siteMainElement, createFilmsSortingTemplate());
-render(siteMainElement, createContentTemplate());
+render(siteHeaderElement, new UserProfileView());
+render(siteMainElement, new MainNavigationView(filterResult));
+render(siteMainElement, new FilmsSortingView());
+render(siteMainElement, new ContentView());
 
 const content = siteMainElement.querySelector(`.films`);
 const sortedFilms = content.querySelector(`.films-list`);
@@ -54,24 +53,16 @@ const onClosePopup = () => {
   });
 };
 
-const renderGenres = (currentIndex) => {
-  const genresContainer = document.querySelector(`.film-details__cell--genres`);
-  similarFilms[currentIndex].genres.forEach((elem) => {
-    render(genresContainer, createGenresTemplate(elem));
-  });
-};
-
 const renderComments = (currentIndex) => {
   const commentsContainer = document.querySelector(`.film-details__comments-list`);
   for (let comment of similarFilms[currentIndex].comments) {
-    render(commentsContainer, createCommentTemplate(comment));
+    render(commentsContainer, new FilmCommentsView(comment));
   }
 };
 
 const openFilmPopup = (currentIndex) => {
   closePopup();
-  render(siteBody, createFilmPopupTemplate(similarFilms[currentIndex]));
-  renderGenres(currentIndex);
+  render(siteBody, new FilmDetailsView(similarFilms[currentIndex], `afterend`));
   renderComments(currentIndex);
   onClosePopup();
 };
@@ -90,7 +81,7 @@ const renderFilmCards = () => {
   amountFilmsToRender += AMOUNT_FILMS_TO_SHOW;
 
   for (let i = countShowFilms; i < amountFilmsToRender; i++) {
-    render(sortedFilmsContainer, createFilmTemplate(similarFilms[i]));
+    render(sortedFilmsContainer, new FilmCardView(similarFilms[i]));
   }
 
   const filmPosters = document.querySelectorAll(`.film-card__poster`);
@@ -113,11 +104,11 @@ renderFilmCards();
 for (let j = 0; j < extraFilmsCategories.length; j++) {
   for (let i = 0; i < EXTRA_FILMS; i++) {
     const extraFilmsList = extraFilmsCategories[j].querySelector(`.films-list__container`);
-    render(extraFilmsList, createFilmTemplate(similarFilms[i]));
+    render(extraFilmsList, new FilmCardView(similarFilms[i]));
   }
 }
 
-render(sortedFilms, showMoreBtn());
+render(sortedFilms, new ShowMoreButtonView());
 
 const showMoreButton = document.querySelector(`.films-list__show-more`);
 
@@ -125,4 +116,4 @@ showMoreButton.addEventListener(`click`, () => {
   renderFilmCards();
 });
 
-render(footerStatisticsContainer, createFilmsAmount());
+render(footerStatisticsContainer, new FilmsAmountView(similarFilms.length));

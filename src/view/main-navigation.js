@@ -1,6 +1,6 @@
-import {filterResult} from '../mock/films.js';
+import {createElement} from '../util/utils.js';
 
-export const createMainNavigationTemplate = () => {
+const createMainNavigationTemplate = (filterResult) => {
   const {watchList, history, favorites} = filterResult;
   return (
     `<nav class="main-navigation">
@@ -14,3 +14,26 @@ export const createMainNavigationTemplate = () => {
     </nav>`
   );
 };
+
+export default class MainNavigation {
+  constructor(filterResult) {
+    this._element = null;
+    this._filterResult = filterResult;
+  }
+
+  getTemplate() {
+    return createMainNavigationTemplate(this._filterResult);
+  }
+
+  getElement() {
+    if (!this._element) {
+      this._element = createElement(this.getTemplate());
+    }
+
+    return this._element;
+  }
+
+  removeElement() {
+    this._element = null;
+  }
+}
