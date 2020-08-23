@@ -19,7 +19,7 @@ const createCommentTemplate = (currentComment) => {
   );
 };
 
-export default class Comment {
+export default class FilmComments {
   constructor(currentComment) {
     this._element = null;
     this._currentComment = currentComment;

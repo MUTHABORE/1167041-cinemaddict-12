@@ -1,19 +1,19 @@
 import {createElement} from '../util/utils.js';
 
-const createGenresTemplate = (currentGenre) => {
-  return `
-  <span class="film-details__genre">${currentGenre}</span>
-  `;
+const createFilmsAmount = (allFilmsAmount) => {
+  return (
+    `<p>${allFilmsAmount} movies inside</p>`
+  );
 };
 
-export default class Genre {
-  constructor(currentGenre) {
+export default class FilmsAmount {
+  constructor(allFilmsAmount) {
     this._element = null;
-    this._currentGenre = currentGenre;
+    this._allFilmsAmount = allFilmsAmount;
   }
 
   getTemplate() {
-    return createGenresTemplate(this._currentGenre);
+    return createFilmsAmount(this._allFilmsAmount);
   }
 
   getElement() {
