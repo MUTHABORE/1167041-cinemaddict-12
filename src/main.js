@@ -8,7 +8,7 @@ import FilmsAmountView from './view/films-amount.js';
 import ShowMoreButtonView from './view/show-more-button.js';
 import FilmCommentsView from './view/film-comments.js';
 
-import {render} from './util/utils.js';
+import {render} from './util/render.js';
 import {similarFilms, filterResult} from './mock/films.js';
 
 const EXTRA_FILMS = 2;
@@ -77,6 +77,8 @@ let amountFilmsToRender = 0;
 const AMOUNT_FILMS_TO_SHOW = 5;
 
 const renderFilmCards = () => {
+  console.log(`done`);
+
   const countShowFilms = amountFilmsToRender;
   amountFilmsToRender += AMOUNT_FILMS_TO_SHOW;
 
@@ -110,9 +112,10 @@ for (let j = 0; j < extraFilmsCategories.length; j++) {
 
 render(sortedFilms, new ShowMoreButtonView());
 
-const showMoreButton = document.querySelector(`.films-list__show-more`);
+const showMoreButton = new ShowMoreButtonView();
 
-showMoreButton.addEventListener(`click`, () => {
+showMoreButton.setClickHandler(() => {
+  console.log(`whoohoo`);
   renderFilmCards();
 });
 

@@ -1,4 +1,4 @@
-import {createElement} from '../util/utils.js';
+import AbstractView from './abstract.js';
 
 const createCommentTemplate = (currentComment) => {
   const {emoji, text, author, date} = currentComment;
@@ -19,25 +19,13 @@ const createCommentTemplate = (currentComment) => {
   );
 };
 
-export default class FilmComments {
+export default class FilmComments extends AbstractView {
   constructor(currentComment) {
-    this._element = null;
+    super();
     this._currentComment = currentComment;
   }
 
-  getTemplate() {
+  _getTemplate() {
     return createCommentTemplate(this._currentComment);
-  }
-
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-
-    return this._element;
-  }
-
-  removeElement() {
-    this._element = null;
   }
 }

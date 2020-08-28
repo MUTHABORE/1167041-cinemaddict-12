@@ -1,4 +1,4 @@
-import {createElement} from '../util/utils.js';
+import AbstractView from './abstract.js';
 
 const SHORT_DESCRIPTION_LENGTH = 139;
 
@@ -27,25 +27,13 @@ const createFilmTemplate = (filmData) => {
   );
 };
 
-export default class FilmCard {
+export default class FilmCard extends AbstractView {
   constructor(filmData) {
-    this._element = null;
+    super();
     this._filmData = filmData;
   }
 
-  getTemplate() {
+  _getTemplate() {
     return createFilmTemplate(this._filmData);
-  }
-
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-
-    return this._element;
-  }
-
-  removeElement() {
-    this._element = null;
   }
 }

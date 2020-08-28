@@ -1,8 +1,9 @@
-import {getRandomInteger, getRandomSet, getRandomNumber, getRandomBoolean} from '../util/utils.js';
+import {getRandomSet, getRandomNumber, getRandomBoolean} from '../util/render.js';
+import {getRandomInteger} from '../util/common.js';
 import {generateComments} from './comments.js';
 
 const FILM_NAMES = [`Neon Genesis Evangelion`, `2001: A Space Odyssey`, `Arrival`, `Pink Floyd The Wall`, `Interstellar`];
-const POSTER_NAMES = [`made-for-each-other.png`, `popeye-meets-sinbad.png`, `sagebrush-trail.jpg`, `santa-claus-conquers-the-martians.jpg`, `the-dance-of-life.jpg`, `the-great-flamarion.jpg`, `the-man-with-the-golden-arm.jpg`];
+const POSTER_NAMES = [`2001-a-space-oddysey.jpg`, `arrival.jpg`, `interstellar.png`, `neon-genesis-evangelion.jpg`, `the-wall.jpg`, `made-for-each-other.png`, `popeye-meets-sinbad.png`, `sagebrush-trail.jpg`, `santa-claus-conquers-the-martians.jpg`, `the-dance-of-life.jpg`, `the-great-flamarion.jpg`, `the-man-with-the-golden-arm.jpg`];
 const DESCRIPTION = [
   `Lorem ipsum dolor sit amet, consectetur adipiscing elit`,
   `Cras aliquet varius magna, non porta ligula feugiat eget`,
