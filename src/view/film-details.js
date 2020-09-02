@@ -1,5 +1,5 @@
 import {MONTHS} from '../mock/films.js';
-import {createElement} from '../util/utils.js';
+import AbstractView from './abstract.js';
 
 const createFilmPopupTemplate = (filmData) => {
   const {name, rating, poster, ageRating, director, writers, actors, releaseDate, runtime, countries, description, comments, genres} = filmData;
@@ -131,25 +131,24 @@ const createFilmPopupTemplate = (filmData) => {
   );
 };
 
-export default class FilmDetails {
+export default class FilmDetails extends AbstractView {
   constructor(filmData) {
-    this._element = null;
+    super();
     this._filmData = filmData;
+    this._closePopupHandler = this._closePopupHandler.bind(this);
   }
 
-  getTemplate() {
+  _getTemplate() {
     return createFilmPopupTemplate(this._filmData);
   }
 
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-
-    return this._element;
+  _closePopupHandler(evt) {
+    evt.preventDefault();
+    this._callback.closePopup();
   }
 
-  removeElement() {
-    this._element = null;
+  setClosePopupHandler(callback) {
+    this._callback.closePopup = callback;
+    this.getElement().querySelector(`.film-details__close-btn`).addEventListener(`click`, this._closePopupHandler);
   }
 }

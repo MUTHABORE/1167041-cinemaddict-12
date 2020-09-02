@@ -1,4 +1,4 @@
-import {getRandomInteger} from '../util/utils.js';
+import {getRandomInteger} from '../util/common.js';
 
 const COMMENTS_MAX_AMOUNT = 4;
 const COMMENTS_MAX_HOURS = 24;
