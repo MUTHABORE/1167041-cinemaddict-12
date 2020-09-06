@@ -5,9 +5,11 @@ import FilmDetailsView from '../view/film-details.js';
 import ShowMoreButtonView from '../view/show-more-button.js';
 import FilmCommentsView from '../view/film-comments.js';
 import NoMoviesInDatabaseView from '../view/no-movies-in-database.js';
-
-import {render} from '../util/render.js';
 import {similarFilms} from '../mock/films.js';
+
+import {SortType} from '../util/const.js';
+import {render} from '../util/render.js';
+import {sortFilmsDate, sortFilmsRating} from '../util/film.js';
 
 const KEY_ESC = 27;
 const AMOUNT_FILMS_TO_SHOW = 5;
@@ -17,28 +19,83 @@ const siteFooterElement = document.querySelector(`.footer`);
 
 export default class MovieList {
   constructor(movieListContainer) {
-    this._movieListContainer = movieListContainer;
     this._amountFilmsForShow = AMOUNT_FILMS_TO_SHOW;
+    this._keyEsc = KEY_ESC;
+    this._currentSortType = SortType.DEFAULT;
+
+    this._allFilms = similarFilms.slice();
+    this._sourceAllFilms = similarFilms.slice();
+
+    this._movieListContainer = movieListContainer;
     this._amountFilmsToRender = amountFilmsToRender;
     this._content = new ContentView();
+    this._sortComponent = new FilmsSortingView();
 
-    this._keyEsc = KEY_ESC;
     this._showMoreButton = new ShowMoreButtonView();
+    this._handleSortTypeChange = this._handleSortTypeChange.bind(this);
+    this._sortingFilms = this._sortingFilms.bind(this);
+    this._renderSort = this._renderSort.bind(this);
+    this._closePopup = this._closePopup.bind(this);
+    this._renderComments = this._renderComments.bind(this);
+    this._closePopupByEscHandler = this._closePopupByEscHandler.bind(this);
+    this._openFilmPopup = this._openFilmPopup.bind(this);
+    this._renderFilmCards = this._renderFilmCards.bind(this);
+    this._sortedFilms = this._content.getElement().querySelector(`.films-list`);
+    this._sortedFilmsContainer = this._sortedFilms.querySelector(`.films-list__container`);
   }
 
   init() {
-    render(this._movieListContainer, new FilmsSortingView());
-    this._sortedFilms = this._content.getElement().querySelector(`.films-list`);
-    this._sortedFilmsContainer = this._sortedFilms.querySelector(`.films-list__container`);
+    this._renderSort();
 
-    if (similarFilms.length === 0) {
+    if (this._allFilms.length === 0) {
       render(this._movieListContainer, new NoMoviesInDatabaseView());
     } else {
       render(this._movieListContainer, this._content);
 
-      this._renderFilmCards();
+      console.log(this._allFilms);
+      this._renderFilmCards(this._allFilms);
       this._createShowMoreButton();
     }
+  }
+
+  _sortingFilms(sortType) {
+    switch (sortType) {
+      case SortType.DATE:
+        this._allFilms.sort(sortFilmsDate);
+        break;
+      case SortType.RATING:
+        console.log(this._allFilms);
+        this._allFilms.sort(sortFilmsRating);
+        console.log(this._allFilms);
+        break;
+      default:
+        this._allFilms = this._sourceAllFilms.slice();
+    }
+
+    this._currentSortType = sortType;
+  }
+
+  _handleSortTypeChange(sortType) {
+    if (this._currentSortType === sortType) {
+      return;
+    }
+    console.log(this._allFilms);
+
+    if (this._allFilms.length === 0) {
+      render(this._movieListContainer, new NoMoviesInDatabaseView());
+    } else {
+      this._sortingFilms(sortType);
+      console.log(this._allFilms);
+      this._sortedFilmsContainer.innerHTML = ``;
+      render(this._movieListContainer, this._content);
+      this._renderFilmCards(this._allFilms);
+      this._createShowMoreButton();
+    }
+  }
+
+  _renderSort() {
+    render(this._movieListContainer, this._sortComponent);
+    this._sortComponent.setSortTypeChangeHandler(this._handleSortTypeChange);
   }
 
   _closePopup() {
@@ -61,13 +118,13 @@ export default class MovieList {
 
   _renderComments(currentIndex) {
     const commentsContainer = document.querySelector(`.film-details__comments-list`);
-    for (let comment of similarFilms[currentIndex].comments) {
+    for (let comment of this._allFilms[currentIndex].comments) {
       render(commentsContainer, new FilmCommentsView(comment));
     }
   }
 
   _openFilmPopup(currentIndex) {
-    const filmDetails = new FilmDetailsView(similarFilms[currentIndex]);
+    const filmDetails = new FilmDetailsView(this._allFilms[currentIndex]);
     this._closePopup();
     render(siteFooterElement, filmDetails, `afterend`);
     this._renderComments(currentIndex);
@@ -77,19 +134,19 @@ export default class MovieList {
     this._closePopupByEscHandler();
   }
 
-  _renderFilmCards() {
+  _renderFilmCards(sorterdFilms) {
     const countShowFilms = amountFilmsToRender;
     amountFilmsToRender += AMOUNT_FILMS_TO_SHOW;
 
     for (let i = countShowFilms; i < amountFilmsToRender; i++) {
-      const filmCard = new FilmCardView(similarFilms[i]);
+      const filmCard = new FilmCardView(sorterdFilms[i]);
       render(this._sortedFilmsContainer, filmCard);
       filmCard.setOpenPopupHandler(() => {
         this._openFilmPopup(i);
       });
     }
 
-    if (amountFilmsToRender >= similarFilms.length) {
+    if (amountFilmsToRender >= sorterdFilms.length) {
       this._showMoreButton.getElement().remove();
       this._showMoreButton.removeElement();
     }
@@ -99,7 +156,7 @@ export default class MovieList {
     render(this._sortedFilms, this._showMoreButton);
 
     this._showMoreButton.setClickHandler(() => {
-      this._renderFilmCards();
+      this._renderFilmCards(this._allFilms);
     });
   }
 }
