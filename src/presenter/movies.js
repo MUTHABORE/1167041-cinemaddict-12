@@ -40,6 +40,7 @@ export default class MovieList {
     this._closePopupByEscHandler = this._closePopupByEscHandler.bind(this);
     this._openFilmPopup = this._openFilmPopup.bind(this);
     this._renderFilmCards = this._renderFilmCards.bind(this);
+    this._clearFilmsList = this._clearFilmsList.bind(this);
     this._sortedFilms = this._content.getElement().querySelector(`.films-list`);
     this._sortedFilmsContainer = this._sortedFilms.querySelector(`.films-list__container`);
   }
@@ -52,7 +53,7 @@ export default class MovieList {
     } else {
       render(this._movieListContainer, this._content);
 
-      console.log(this._allFilms);
+      this._clearFilmsList();
       this._renderFilmCards(this._allFilms);
       this._createShowMoreButton();
     }
@@ -64,9 +65,7 @@ export default class MovieList {
         this._allFilms.sort(sortFilmsDate);
         break;
       case SortType.RATING:
-        console.log(this._allFilms);
         this._allFilms.sort(sortFilmsRating);
-        console.log(this._allFilms);
         break;
       default:
         this._allFilms = this._sourceAllFilms.slice();
@@ -79,18 +78,16 @@ export default class MovieList {
     if (this._currentSortType === sortType) {
       return;
     }
-    console.log(this._allFilms);
+    this._sortingFilms(sortType);
+    this._clearFilmsList();
+    render(this._movieListContainer, this._content);
+    this._renderFilmCards(this._allFilms);
+    this._createShowMoreButton();
+  }
 
-    if (this._allFilms.length === 0) {
-      render(this._movieListContainer, new NoMoviesInDatabaseView());
-    } else {
-      this._sortingFilms(sortType);
-      console.log(this._allFilms);
-      this._sortedFilmsContainer.innerHTML = ``;
-      render(this._movieListContainer, this._content);
-      this._renderFilmCards(this._allFilms);
-      this._createShowMoreButton();
-    }
+  _clearFilmsList() {
+    this._amountFilmsToRender = 0;
+    this._sortedFilmsContainer.innerHTML = ``;
   }
 
   _renderSort() {
@@ -135,10 +132,10 @@ export default class MovieList {
   }
 
   _renderFilmCards(sorterdFilms) {
-    const countShowFilms = amountFilmsToRender;
-    amountFilmsToRender += AMOUNT_FILMS_TO_SHOW;
+    const countShowFilms = this._amountFilmsToRender;
+    this._amountFilmsToRender += AMOUNT_FILMS_TO_SHOW;
 
-    for (let i = countShowFilms; i < amountFilmsToRender; i++) {
+    for (let i = countShowFilms; i < this._amountFilmsToRender; i++) {
       const filmCard = new FilmCardView(sorterdFilms[i]);
       render(this._sortedFilmsContainer, filmCard);
       filmCard.setOpenPopupHandler(() => {
@@ -146,7 +143,7 @@ export default class MovieList {
       });
     }
 
-    if (amountFilmsToRender >= sorterdFilms.length) {
+    if (this._amountFilmsToRender >= sorterdFilms.length) {
       this._showMoreButton.getElement().remove();
       this._showMoreButton.removeElement();
     }
