@@ -16,6 +16,6 @@ render(siteHeaderElement, new UserProfileView());
 render(siteMainElement, new MainNavigationView(filterResult));
 
 const filmsListPresenter = new MovieListPresenter(siteMainElement);
-filmsListPresenter.init(similarFilms);
+filmsListPresenter.init();
 
 render(footerStatisticsContainer, new FilmsAmountView(similarFilms.length));
