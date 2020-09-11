@@ -88,7 +88,7 @@ export default class MovieList {
   _renderFilms() {
     this._clearFilmsList();
     if (this._allFilms.length === 0) {
-      if (this._movieListContainer.querySelector(`.films`) === true) {
+      if (this._movieListContainer.querySelector(`.films`) === null) {
         render(this._movieListContainer, new NoMoviesInDatabaseView());
       }
     } else {
