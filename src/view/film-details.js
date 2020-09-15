@@ -147,8 +147,24 @@ export default class FilmDetails extends AbstractView {
     this._callback.closePopup();
   }
 
+  _changeControlsHandler(evt) {
+    if (evt.target !== `label`) {
+      return;
+    }
+
+    evt.preventDefault();
+    this.callback.changeControl();
+
+    // evt.target.add(`sort__button--active`);
+  }
+
   setClosePopupHandler(callback) {
     this._callback.closePopup = callback;
     this.getElement().querySelector(`.film-details__close-btn`).addEventListener(`click`, this._closePopupHandler);
+  }
+
+  setChangeControlHandler(callback) {
+    this._callback.changeControl = callback;
+    this.getElement().querySelector(`film-details__controls`).addEventListener(`click`, this._changeControlsHandler);
   }
 }
