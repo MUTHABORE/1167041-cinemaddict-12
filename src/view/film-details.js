@@ -2,7 +2,7 @@ import {MONTHS} from '../mock/films.js';
 import AbstractView from './abstract.js';
 
 const createFilmPopupTemplate = (filmData) => {
-  const {name, rating, poster, ageRating, director, writers, actors, releaseDate, runtime, countries, description, comments, genres} = filmData;
+  const {name, rating, poster, ageRating, director, writers, actors, releaseDate, runtime, countries, description, comments, genres, filterStatus} = filmData;
 
   const createGenres = () => {
     let filmsGenres = ``;
@@ -78,13 +78,13 @@ const createFilmPopupTemplate = (filmData) => {
           </div>
 
           <section class="film-details__controls">
-            <input type="checkbox" class="film-details__control-input visually-hidden" id="watchlist" name="watchlist">
+            <input type="checkbox" class="film-details__control-input visually-hidden" id="watchlist" name="watchlist" ${filterStatus.watchList ? `checked` : ``}>
             <label for="watchlist" class="film-details__control-label film-details__control-label--watchlist">Add to watchlist</label>
 
-            <input type="checkbox" class="film-details__control-input visually-hidden" id="watched" name="watched">
+            <input type="checkbox" class="film-details__control-input visually-hidden" id="watched" name="watched" ${filterStatus.history ? `checked` : ``}>
             <label for="watched" class="film-details__control-label film-details__control-label--watched">Already watched</label>
 
-            <input type="checkbox" class="film-details__control-input visually-hidden" id="favorite" name="favorite">
+            <input type="checkbox" class="film-details__control-input visually-hidden" id="favorite" name="favorite" ${filterStatus.favorites ? `checked` : ``}>
             <label for="favorite" class="film-details__control-label film-details__control-label--favorite">Add to favorites</label>
           </section>
         </div>
@@ -135,7 +135,11 @@ export default class FilmDetails extends AbstractView {
   constructor(filmData) {
     super();
     this._filmData = filmData;
+
     this._closePopupHandler = this._closePopupHandler.bind(this);
+    this._changeWatchlistHandler = this._changeWatchlistHandler.bind(this);
+    this._changeHistoryHandler = this._changeHistoryHandler.bind(this);
+    this._changeFavoriteHandler = this._changeFavoriteHandler.bind(this);
   }
 
   _getTemplate() {
@@ -147,8 +151,38 @@ export default class FilmDetails extends AbstractView {
     this._callback.closePopup();
   }
 
+  _changeWatchlistHandler(evt) {
+    evt.preventDefault();
+    this._callback.changeWatchlist();
+  }
+
+  _changeHistoryHandler(evt) {
+    evt.preventDefault();
+    this._callback.changeHistory();
+  }
+
+  _changeFavoriteHandler(evt) {
+    evt.preventDefault();
+    this._callback.changeFavorite();
+  }
+
   setClosePopupHandler(callback) {
     this._callback.closePopup = callback;
     this.getElement().querySelector(`.film-details__close-btn`).addEventListener(`click`, this._closePopupHandler);
+  }
+
+  setChangeWatchlistHandler(callback) {
+    this._callback.changeWatchlist = callback;
+    this.getElement().querySelector(`.film-details__control-label--watchlist`).addEventListener(`click`, this._changeWatchlistHandler);
+  }
+
+  setChangeHistoryHandler(callback) {
+    this._callback.changeHistory = callback;
+    this.getElement().querySelector(`.film-details__control-label--watched`).addEventListener(`click`, this._changeHistoryHandler);
+  }
+
+  setChangeFavoriteHandler(callback) {
+    this._callback.changeFavorite = callback;
+    this.getElement().querySelector(`.film-details__control-label--favorite`).addEventListener(`click`, this._changeFavoriteHandler);
   }
 }

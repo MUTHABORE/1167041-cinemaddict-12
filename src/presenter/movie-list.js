@@ -1,8 +1,7 @@
 import FilmsSortingView from '../view/films-sorting.js';
 import ContentView from '../view/content.js';
-import FilmCardView from '../view/film-card.js';
 import ShowMoreButtonView from '../view/show-more-button.js';
-import FilmCommentsView from '../view/film-comments.js';
+// import FilmCommentsView from '../view/film-comments.js';
 import NoMoviesInDatabaseView from '../view/no-movies-in-database.js';
 
 import MoviePresenter from './movie.js';
@@ -10,6 +9,7 @@ import MoviePresenter from './movie.js';
 import {SortType} from '../util/const.js';
 import {render} from '../util/render.js';
 import {sortFilmsDate, sortFilmsRating} from '../util/film.js';
+import {updateItem} from '../util/common.js';
 import {similarFilms} from '../mock/films.js';
 
 
@@ -18,6 +18,8 @@ let amountFilmsToRender = 0;
 
 export default class MovieList {
   constructor(movieListContainer) {
+    this._moviesPresenters = {};
+
     this._amountFilmsForShow = AMOUNT_FILMS_TO_SHOW;
     this._currentSortType = SortType.DEFAULT;
 
@@ -30,9 +32,11 @@ export default class MovieList {
     this._handleSortTypeChange = this._handleSortTypeChange.bind(this);
     this._sortFilms = this._sortFilms.bind(this);
     this._renderSort = this._renderSort.bind(this);
-    this._renderComments = this._renderComments.bind(this);
+    // this._renderComments = this._renderComments.bind(this);
     this._renderFilmCards = this._renderFilmCards.bind(this);
     this._renderFilms = this._renderFilms.bind(this);
+    this._destroyFilmDetails = this._destroyFilmDetails.bind(this);
+    this._handleCardChange = this._handleCardChange.bind(this);
 
     this._sortedFilms = this._content.getElement().querySelector(`.films-list`);
     this._sortedFilmsContainer = this._sortedFilms.querySelector(`.films-list__container`);
@@ -93,12 +97,12 @@ export default class MovieList {
     }
   }
 
-  _renderComments(currentIndex) {
-    const commentsContainer = document.querySelector(`.film-details__comments-list`);
-    for (let comment of this._allFilms[currentIndex].comments) {
-      render(commentsContainer, new FilmCommentsView(comment));
-    }
-  }
+  // _renderComments(currentIndex) {
+  //   const commentsContainer = document.querySelector(`.film-details__comments-list`);
+  //   for (let comment of this._allFilms[currentIndex].comments) {
+  //     render(commentsContainer, new FilmCommentsView(comment));
+  //   }
+  // }
 
   _renderFilmCards(sorterdFilms) {
     const countShowFilms = this._amountFilmsToRender;
@@ -109,12 +113,10 @@ export default class MovieList {
     }
 
     for (let i = countShowFilms; i < this._amountFilmsToRender; i++) {
-      const filmCard = new FilmCardView(sorterdFilms[i]);
-      render(this._sortedFilmsContainer, filmCard);
-      const moviePresenter = new MoviePresenter();
-      filmCard.setOpenPopupHandler(() => {
-        moviePresenter.init(i, this._allFilms);
-      });
+
+      const moviePresenter = new MoviePresenter(this._handleCardChange);
+      this._moviesPresenters[sorterdFilms[i].id] = moviePresenter;
+      moviePresenter.init(this._sortedFilmsContainer, sorterdFilms[i], this._destroyFilmDetails);
     }
 
     if (this._amountFilmsToRender >= sorterdFilms.length) {
@@ -129,5 +131,16 @@ export default class MovieList {
     this._showMoreButton.setClickHandler(() => {
       this._renderFilmCards(this._allFilms);
     });
+  }
+
+  _handleCardChange(updatedFilmData) {
+    this._allFilms = updateItem(this._allFilms, updatedFilmData);
+    this._sourceAllFilms = updateItem(this._sourceAllFilms, updatedFilmData);
+    this._destroyFilmDetails();
+    this._moviesPresenters[updatedFilmData.id].init(this._sortedFilmsContainer, updatedFilmData, this._destroyFilmDetails);
+  }
+
+  _destroyFilmDetails() {
+    Object.values(this._moviesPresenters).forEach((elem) => elem.destroy());
   }
 }

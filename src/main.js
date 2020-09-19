@@ -1,6 +1,6 @@
 import UserProfileView from './view/user-profile.js';
 import MainNavigationView from './view/main-navigation.js';
-import MovieListPresenter from './presenter/movies.js';
+import MovieListPresenter from './presenter/movie-list.js';
 import FilmsAmountView from './view/films-amount.js';
 
 import {render} from './util/render.js';

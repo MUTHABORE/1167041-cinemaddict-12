@@ -29,12 +29,15 @@ export const MONTHS = [`January`, `February`, `March`, `April`, `May`, `June`, `
 export const MONTH_DAYS_MAX = 31;
 const AGE_RATING = [`0+`, `3+`, `6+`, `7+`, `9+`, `12+`, `16+`, `17+`, `18+`, `20+`, `21+`];
 
+const generateId = () => Date.now() + parseInt(Math.random() * 10000, 10);
+
 const generateFilmsDatabase = () => {
   const films = [];
 
   for (let i = 0; i < MAX_FILMS_AMOUNT; i++) {
     films[i] = {};
 
+    films[i].id = generateId();
     films[i].poster = POSTER_NAMES[getRandomInteger(0, POSTER_NAMES.length - 1)];
     films[i].name = FILM_NAMES[getRandomInteger(0, FILM_NAMES.length - 1)];
     films[i].originalName = films[i].name;
