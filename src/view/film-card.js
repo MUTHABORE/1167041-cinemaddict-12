@@ -1,18 +1,18 @@
 import AbstractView from './abstract.js';
+import moment from 'moment';
 
 const SHORT_DESCRIPTION_LENGTH = 139;
 
 const createFilmTemplate = (filmData) => {
   const {name, rating, releaseDate, runtime, genres, poster, comments, description, filterStatus} = filmData;
   const shortDescription = description.length > 140 ? description.slice(0, SHORT_DESCRIPTION_LENGTH) + `…` : description;
-
   return (
     `<article class="film-card">
       <h3 class="film-card__title">${name}</h3>
       <p class="film-card__rating">${rating}</p>
       <p class="film-card__info">
-        <span class="film-card__year">${releaseDate.getFullYear()}</span>
-        <span class="film-card__duration">${Math.floor(runtime / 60) + `h ` + Math.floor(runtime % 60) + `m`}</span>
+        <span class="film-card__year">${moment(releaseDate).format(`YYYY`)}</span>
+        <span class="film-card__duration">${moment.utc(moment.duration(runtime, `minutes`).asMilliseconds()).format(`hh[h ]mm[m]`)}</span>
         <span class="film-card__genre">${genres[0]}</span>
       </p>
       <img src="${`./images/posters/` + poster}" alt="Постер фильма ${name}" class="film-card__poster">

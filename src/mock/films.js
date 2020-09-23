@@ -63,27 +63,27 @@ const generateFilmsDatabase = () => {
 
 export const similarFilms = generateFilmsDatabase();
 
-export const createFilter = () => {
-  const filter = {
-    watchList: 0,
-    history: 0,
-    favorites: 0,
-  };
+// export const createFilter = () => {
+//   const filter = {
+//     watchList: 0,
+//     history: 0,
+//     favorites: 0,
+//   };
 
-  for (const currentFilterStatus of similarFilms) {
-    if (currentFilterStatus.filterStatus.watchList) {
-      filter.watchList += 1;
-    }
+//   for (const currentFilterStatus of similarFilms) {
+//     if (currentFilterStatus.filterStatus.watchList) {
+//       filter.watchList += 1;
+//     }
 
-    if (currentFilterStatus.filterStatus.history) {
-      filter.history += 1;
-    }
+//     if (currentFilterStatus.filterStatus.history) {
+//       filter.history += 1;
+//     }
 
-    if (currentFilterStatus.filterStatus.favorites) {
-      filter.favorites += 1;
-    }
-  }
-  return filter;
-};
+//     if (currentFilterStatus.filterStatus.favorites) {
+//       filter.favorites += 1;
+//     }
+//   }
+//   return filter;
+// };
 
-export const filterResult = createFilter();
+// export const filterResult = createFilter();
