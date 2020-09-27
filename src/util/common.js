@@ -1,6 +1,14 @@
-export const getRandomInteger = (a = 0, b = 1) => {
-  const lower = Math.ceil(Math.min(a, b));
-  const upper = Math.floor(Math.max(a, b));
+import moment from 'moment';
 
-  return Math.floor(lower + Math.random() * (upper - lower + 1));
+const SHAKE_ANIMATION_TIMEOUT = 600;
+
+export const setFormatCommentDate = (date) => {
+  return moment(Date.parse(date)).fromNow();
+};
+
+export const shakeEffect = (element) => {
+  element.style.animation = `shake ${SHAKE_ANIMATION_TIMEOUT / 1000}s`;
+  setTimeout(() => {
+    element.style.animation = ``;
+  }, SHAKE_ANIMATION_TIMEOUT);
 };

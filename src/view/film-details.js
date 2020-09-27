@@ -23,7 +23,7 @@ const createFilmPopupTemplate = (filmData) => {
           </div>
           <div class="film-details__info-wrap">
             <div class="film-details__poster">
-              <img class="film-details__poster-img" src="${`./images/posters/` + poster}" alt="${name}">
+              <img class="film-details__poster-img" src="${poster}" alt="${name}">
 
               <p class="film-details__age">${ageRating}</p>
             </div>
@@ -47,7 +47,7 @@ const createFilmPopupTemplate = (filmData) => {
                 </tr>
                 <tr class="film-details__row">
                   <td class="film-details__term">Writers</td>
-                  <td class="film-details__cell">${writers.join(`, `)}</td>
+                  <td class="film-details__cell">${writers}</td>
                 </tr>
                 <tr class="film-details__row">
                   <td class="film-details__term">Actors</td>
@@ -63,7 +63,7 @@ const createFilmPopupTemplate = (filmData) => {
                 </tr>
                 <tr class="film-details__row">
                   <td class="film-details__term">Country</td>
-                  <td class="film-details__cell">${countries.join(`, `)}</td>
+                  <td class="film-details__cell">${countries}</td>
                 </tr>
                 <tr class="film-details__row">
                   <td class="film-details__term">${genreTitle}</td>

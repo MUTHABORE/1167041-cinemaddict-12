@@ -62,4 +62,9 @@ export default class commentsConteiner extends AbstractView {
     const emojiItems = this.getElement().querySelectorAll(`.film-details__emoji-label`);
     emojiItems.forEach((item) => item.addEventListener(`click`, this._selectEmojiHandler));
   }
+
+  removeSelectEmojiHandler() {
+    const emojiItems = this.getElement().querySelectorAll(`.film-details__emoji-label`);
+    emojiItems.forEach((item) => item.removeEventListener(`click`, this._selectEmojiHandler));
+  }
 }

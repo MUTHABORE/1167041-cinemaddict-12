@@ -23,6 +23,8 @@ export default class MainNavigation extends AbstractView {
     this._currentFilter = currentFilter;
 
     this._filterTypeChangeHandler = this._filterTypeChangeHandler.bind(this);
+    this._openStatisticHandler = this._openStatisticHandler.bind(this);
+    this._closeStatisticHandler = this._closeStatisticHandler.bind(this);
   }
 
   _getTemplate() {
@@ -38,5 +40,29 @@ export default class MainNavigation extends AbstractView {
     this._callback.filterTypeChange = callback;
     const filterElements = this.getElement().querySelectorAll(`.main-navigation__item`);
     filterElements.forEach((filter) => filter.addEventListener(`click`, this._filterTypeChangeHandler));
+  }
+
+  _openStatisticHandler(evt) {
+    evt.preventDefault();
+    this._callback.openStatisticHandler();
+    this.getElement().querySelector(`.main-navigation__additional`).removeEventListener(`click`, this._openStatisticHandler);
+    this.getElement().querySelector(`.main-navigation__items`).addEventListener(`click`, this._closeStatisticHandler);
+  }
+
+  setOpenStatisticHandler(callback) {
+    this._callback.openStatisticHandler = callback;
+    this.getElement().querySelector(`.main-navigation__additional`).addEventListener(`click`, this._openStatisticHandler);
+  }
+
+  _closeStatisticHandler(evt) {
+    evt.preventDefault();
+    this._callback.closeStatisticHandler();
+    this.getElement().querySelector(`.main-navigation__items`).removeEventListener(`click`, this._closeStatisticHandler);
+    this.getElement().querySelector(`.main-navigation__additional`).addEventListener(`click`, this._openStatisticHandler);
+  }
+
+  setCloseStatisticHandler(callback) {
+    this._callback.closeStatisticHandler = callback;
+    this.getElement().querySelector(`.main-navigation__items`).addEventListener(`click`, this._closeStatisticHandler);
   }
 }
