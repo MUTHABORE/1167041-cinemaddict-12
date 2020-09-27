@@ -3,7 +3,7 @@ import FilmDetailsView from '../view/film-details.js';
 import CommentsPresenter from '../presenter/comments.js';
 import CommentsModel from '../model/comments.js';
 import {render, remove, replace} from '../util/render.js';
-import {UpdateType, KeyCodes} from '../util/const.js';
+import {UpdateType, KeyCode} from '../util/const.js';
 
 export default class Movie {
   constructor(changeData, moviesModel, api) {
@@ -77,7 +77,7 @@ export default class Movie {
   }
 
   _closePopupKeydownHandler(evt) {
-    if (evt.keyCode === KeyCodes.KEY_ESC) {
+    if (evt.keyCode === KeyCode.KEY_ESC) {
       this._closePopupMovie();
     }
   }

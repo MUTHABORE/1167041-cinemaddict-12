@@ -1,8 +1,8 @@
 import {render} from '../util/render.js';
-import {UpdateType, UserAction, KeyCodes} from '../util/const.js';
+import {UpdateType, UserAction, KeyCode} from '../util/const.js';
 import FilmCommentsView from '../view/film-comments.js';
 import CommentsContainerView from '../view/comments-container.js';
-import {shakeEffect} from '../util/common.js';
+import {setShakeEffect} from '../util/common.js';
 
 export default class Comments {
   constructor(commentsModel, moviesModel, film, api) {
@@ -32,8 +32,6 @@ export default class Comments {
     this._commentAddPanel = this._commentsContainer.getElement().querySelector(`.film-details__new-comment`);
     this._newCommentInput = this._commentAddPanel.querySelector(`.film-details__comment-input`);
 
-    this._selectedCommentEmoji = null;
-
     render(this._container, this._commentsContainer);
 
     this._comments.forEach((comment) => {
@@ -62,10 +60,6 @@ export default class Comments {
     this._commentsContainer.getElement().querySelector(`.film-details__add-emoji-label`).innerHTML = `<img src="images/emoji/${this._currentEmoji}.png" width="55" height="55" alt="emoji-${this._currentEmoji}">`;
   }
 
-  _getCommentTextInput(evt) {
-    return evt.target.value;
-  }
-
   _createNewComment(evt) {
     return {
       date: new Date(),
@@ -79,9 +73,9 @@ export default class Comments {
   }
 
   _handleAddComment(evt) {
-    if (evt.ctrlKey && evt.keyCode === KeyCodes.KEY_ENTER) {
+    if (evt.ctrlKey && evt.keyCode === KeyCode.KEY_ENTER) {
       if (this._currentEmoji === `` || this._getInputTextareaValue(evt) === ``) {
-        shakeEffect(this._commentAddPanel);
+        setShakeEffect(this._commentAddPanel);
         return;
       }
       this._changeAddPanelStatus(`inactive`);
@@ -122,7 +116,7 @@ export default class Comments {
           })
           .catch(() => {
             this._changeAddPanelStatus(`active`);
-            shakeEffect(this._commentAddPanel);
+            setShakeEffect(this._commentAddPanel);
           })
         ;
         break;
@@ -135,7 +129,7 @@ export default class Comments {
           })
           .catch(() => {
             this._changeDeleteButtonStatus(this._filmCommentsView[update.id], `active`);
-            shakeEffect(this._filmCommentsView[update.id].getElement());
+            setShakeEffect(this._filmCommentsView[update.id].getElement());
           });
         break;
     }

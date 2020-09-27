@@ -6,7 +6,7 @@ export const setFormatCommentDate = (date) => {
   return moment(Date.parse(date)).fromNow();
 };
 
-export const shakeEffect = (element) => {
+export const setShakeEffect = (element) => {
   element.style.animation = `shake ${SHAKE_ANIMATION_TIMEOUT / 1000}s`;
   setTimeout(() => {
     element.style.animation = ``;

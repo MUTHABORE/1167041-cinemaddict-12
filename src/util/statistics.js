@@ -9,11 +9,11 @@ export const getTotalFilmsDuration = (films) => {
 export const getAllGenres = (films) => {
   const allGenres = [];
   films.map((film) => allGenres.push(film.genres));
-  const countGenres = allGenres.flat().reduce((accumulatedArr, currentGenre) => {
-    accumulatedArr[currentGenre] = accumulatedArr[currentGenre] || 0;
-    accumulatedArr[currentGenre]++;
+  const countGenres = allGenres.flat().reduce((accumulator, currentGenre) => {
+    accumulator[currentGenre] = accumulator[currentGenre] || 0;
+    accumulator[currentGenre]++;
 
-    return accumulatedArr;
+    return accumulator;
   }, {});
 
   return countGenres;

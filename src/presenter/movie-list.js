@@ -27,7 +27,6 @@ export default class MovieList {
 
     this._isLoading = true;
     this._sortComponent = null;
-    this._loadMoreButtonComponent = null;
 
     this._loadingComponent = new LoadingView();
     this._filmsListView = new ContentView();

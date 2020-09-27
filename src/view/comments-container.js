@@ -40,7 +40,7 @@ const createCommentsContainerTemplate = (comments) => {
   );
 };
 
-export default class commentsConteiner extends AbstractView {
+export default class CommentsContainer extends AbstractView {
   constructor(comments) {
     super();
     this.comments = comments;

@@ -12,7 +12,7 @@ const createFilmPopupTemplate = (filmData) => {
     return filmsGenres;
   };
 
-  const genreTitle = genres.length === 1 ? `Genre` : `Genres`;
+  const genreTitle = genres.length > 1 ? `Genres` : `Genre`;
 
   return (
     `<section class="film-details">
@@ -55,11 +55,11 @@ const createFilmPopupTemplate = (filmData) => {
                 </tr>
                 <tr class="film-details__row">
                   <td class="film-details__term">Release Date</td>
-                  <td class="film-details__cell">${moment(releaseDate).format(`d MMMM YYYY`)}</td>
+                  <td class="film-details__cell">${moment(releaseDate).format(`DD MMMM YYYY`)}</td>
                 </tr>
                 <tr class="film-details__row">
                   <td class="film-details__term">Runtime</td>
-                  <td class="film-details__cell">${moment.utc(moment.duration(runtime, `minutes`).asMilliseconds()).format(`hh[h ]mm[m]`)}</td>
+                  <td class="film-details__cell">${moment.utc(moment.duration(runtime, `minutes`).asMilliseconds()).format(`h[h ]mm[m]`)}</td>
                 </tr>
                 <tr class="film-details__row">
                   <td class="film-details__term">Country</td>
