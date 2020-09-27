@@ -1,4 +1,4 @@
-export const KeyCodes = {
+export const KeyCode = {
   KEY_ENTER: 13,
   KEY_ESC: 27,
 };
@@ -36,7 +36,7 @@ export const StatisticsPeriod = {
   YEAR: `year`,
 };
 
-export const ProfileRanks = {
+export const ProfileRank = {
   NOVICE: 1,
   FAN: 11,
   MOVIE_BUFF: 21,

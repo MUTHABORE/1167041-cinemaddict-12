@@ -5,15 +5,15 @@ const SHORT_DESCRIPTION_LENGTH = 140;
 
 const createFilmTemplate = (filmData) => {
   const {name, rating, releaseDate, runtime, genres, poster, comments, description, filterStatus} = filmData;
-  const shortDescription = description.length > SHORT_DESCRIPTION_LENGTH ? description.slice(0, SHORT_DESCRIPTION_LENGTH) + `…` : description;
+  const shortDescription = description.length > SHORT_DESCRIPTION_LENGTH ? description.slice(0, SHORT_DESCRIPTION_LENGTH - 1) + `…` : description;
   return (
     `<article class="film-card">
       <h3 class="film-card__title">${name}</h3>
       <p class="film-card__rating">${rating}</p>
       <p class="film-card__info">
         <span class="film-card__year">${moment(releaseDate).format(`YYYY`)}</span>
-        <span class="film-card__duration">${moment.utc(moment.duration(runtime, `minutes`).asMilliseconds()).format(`hh[h ]mm[m]`)}</span>
-        <span class="film-card__genre">${genres[0]}</span>
+        <span class="film-card__duration">${moment.utc(moment.duration(runtime, `minutes`).asMilliseconds()).format(`h[h ]mm[m]`)}</span>
+        <span class="film-card__genre">${genres[0] || ``}</span>
       </p>
       <img src="${poster}" alt="Постер фильма ${name}" class="film-card__poster">
       <p class="film-card__description">${shortDescription}</p>

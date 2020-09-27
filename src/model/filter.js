@@ -1,7 +1,7 @@
 import Observer from '../util/observer.js';
 import {FilterType} from '../util/const.js';
 
-export default class FilterModel extends Observer {
+export default class Filter extends Observer {
   constructor() {
     super();
     this._activeFilter = FilterType.ALL_MOVIES;
