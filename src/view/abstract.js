@@ -1,4 +1,4 @@
-import {createElement} from "../util/render.js";
+import {createElement} from '../util/render.js';
 
 export default class Abstract {
   constructor() {
@@ -19,6 +19,17 @@ export default class Abstract {
       this._element = createElement(this._getTemplate());
     }
     return this._element;
+  }
+
+  updateElement() {
+    let prevElement = this.getElement();
+    const parent = prevElement.parentElement;
+    this.removeElement();
+
+    const newElement = this.getElement();
+
+    parent.replaceChild(newElement, prevElement);
+    prevElement = null;
   }
 
   removeElement() {

@@ -1,18 +1,19 @@
 import AbstractView from './abstract.js';
 import he from 'he';
+import {setFormatCommentDate} from '../util/common.js';
 
 const createCommentTemplate = (currentComment) => {
-  const {emoji, text, author, date} = currentComment;
+  const {emotion, comment, author, date} = currentComment;
   return (
     `<li class="film-details__comment">
       <span class="film-details__comment-emoji">
-        <img src="${`./images/emoji/` + emoji}" width="55" height="55" alt="emoji-smile">
+        <img src="${`./images/emoji/` + emotion}.png" width="55" height="55" alt="emoji-smile">
       </span>
       <div>
-        <p class="film-details__comment-text">${he.encode(text)}</p>
+        <p class="film-details__comment-text">${he.encode(comment)}</p>
         <p class="film-details__comment-info">
           <span class="film-details__comment-author">${author}</span>
-          <span class="film-details__comment-day">${date.getFullYear() + `/` + date.getMonth() + `/` + date.getDate() + ` ` + date.getHours() + `:` + date.getMinutes()}</span>
+          <span class="film-details__comment-day">${setFormatCommentDate(date)}</span>
           <button class="film-details__comment-delete">Delete</button>
         </p>
       </div>

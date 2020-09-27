@@ -1,5 +1,4 @@
-import {FilterType} from "./const.js";
-// import {} from "../model/movies.js";
+import {FilterType} from './const.js';
 
 export const filter = {
   [FilterType.ALL_MOVIES]: (movies) => movies,
