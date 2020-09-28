@@ -20,15 +20,15 @@ export const getAllGenres = (films) => {
 };
 
 export const getTopGenre = (films) => {
-  const genresCountObject = getAllGenres(films);
+  const genresCount = getAllGenres(films);
 
-  if (Object.keys(genresCountObject).length === 0) {
+  if (Object.keys(genresCount).length === 0) {
     return ``;
   }
 
-  const maxCount = Math.max(...Object.values(genresCountObject));
+  const maxCount = Math.max(...Object.values(genresCount));
 
-  const topGenre = Object.keys(genresCountObject)[Object.values(genresCountObject).indexOf(maxCount)];
+  const topGenre = Object.keys(genresCount)[Object.values(genresCount).indexOf(maxCount)];
 
   return topGenre;
 };
